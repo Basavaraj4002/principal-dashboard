@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Principal Dashboard</title>
+  <style>
+    :root {
+      --blue: #03045e;
+      --orange: #ff7f50;
+      --white: #ffffff;
+      --light-bg: #f4f7fa;
+      --dark-bg: #1a1a1a;
+      --dark-text: #f4f7fa;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: var(--light-bg);
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    header {
+      background-color: var(--white);
+      color: var(--blue);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      /* border-bottom: 2px solid var(--blue); */
+      transition: background-color 0.3s, color 0.3s, border-bottom 0.3s;
+    }
+
+    body.dark header {
+      background-color: #2a2a2a;
+      color: var(--dark-text);
+      /* border-bottom: 2px solid #1e2a78; */
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .profile img {
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+    }
+
+    .info h2, .info p {
+      margin: 2px;
+    }
+
+    .info h2 {
+      color: var(--blue);
+      font-size: 23px;
+    }
+
+    body.dark .info h2 {
+      color: var(--dark-text);
+    }
+
+    .info p {
+      font-size: 16px;
+    }
+
+    body.dark .info p {
+      color: var(--dark-text);
+    }
+
+    .info .principal-btn {
+      background-color: var(--orange);
+      color: var(--blue);
+      border: none;
+      padding: 6px 10px;
+      border-radius: 5px;
+      cursor: default;
+      font-weight: bold;
+    }
+
+    body.dark .info .principal-btn {
+      background-color: #e06c3e;
+      color: #1e2a78;
+    }
+
+    .right-header {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* space between buttons */
+}
+
+
+.theme-toggle {
+    background: linear-gradient(to bottom, #ff8c00, #ff4500);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+}
+    body.dark .theme-toggle {
+      background-color: orangered;
+      border-color: #e06c3e;
+      color: var(--dark-text);
+    }
+
+    .logout-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 100px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+    body.dark .logout-btn {
+      background-color: red;
+      color: var(--dark-text);
+    }
+
+    main {
+      padding: 0px;
+    }
+
+    .task-area {
+      background: var(--white);
+      /* border-radius: 12px; */
+      padding: 20px;
+      /* box-shadow: 0 0 10px rgba(0,0,0,0.05); */
+      margin-bottom: 20px;
+    }
+
+    body.dark .task-area {
+      background: #2a2a2a;
+      /* box-shadow: 0 0 10px rgba(255,255,255,0.1); */
+    }
+
+    .task-area h3 {
+      color: var(--blue);
+    }
+
+    body.dark .task-area h3 {
+      color: var(--dark-text);
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 16px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .circle-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      padding: 0;
+    }
+
+    .small-circle-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      padding: 0;
+      background-color: rgba(255, 255, 255, 0.7);
+      color: var(--blue);
+      border: 1px solid var(--blue);
+    }
+
+    body.dark .small-circle-btn {
+      background-color: rgba(255, 255, 255, 0.7);
+      color: #1e2a78;
+      border: 1px solid #1e2a78;
+    }
+
+    .blue-circle-btn {
+      background-color: var(--blue);
+      color: white;
+    }
+
+    body.dark .blue-circle-btn {
+      background-color: #1e2a78;
+      color: var(--dark-text);
+    }
+
+    .red-circle-btn {
+      background-color: red;
+      color: white;
+    }
+
+    body.dark .red-circle-btn {
+      background-color: darkred;
+      color: var(--dark-text);
+    }
+
+    .assign-btn {
+      background-color: var(--orange);
+      color: white;
+    }
+
+    body.dark .assign-btn {
+      background-color: #e06c3e;
+      color: var(--dark-text);
+    }
+
+    .show-task-btn {
+      background-color: var(--orange);
+      color: white;
+    }
+
+    body.dark .show-task-btn {
+      background-color: #e06c3e;
+      color: var(--dark-text);
+    }
+
+    .submit-btn {
+      background-color: var(--blue);
+      color: white;
+    }
+
+    body.dark .submit-btn {
+      background-color: #1e2a78;
+      color: var(--dark-text);
+    }
+
+    .cancel-task-btn {
+      background-color: red;
+      color: white;
+    }
+
+    body.dark .cancel-task-btn {
+      background-color: darkred;
+      color: var(--dark-text);
+    }
+
+    .task-form {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .task-list {
+      display: none;
+      margin-top: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    body.dark .task-list {
+      border-color: #777;
+      background-color: #333;
+      color: var(--dark-text);
+    }
+
+    .task-list h4 {
+      margin: 0 0 10px 0;
+      color: var(--blue);
+    }
+
+    body.dark .task-list h4 {
+      color: var(--dark-text);
+    }
+
+    .task-item {
+      padding: 10px;
+      border-bottom: 2px solid #999;
+    }
+
+    body.dark .task-item {
+      border-bottom: 2px solid #666;
+      color: var(--dark-text);
+    }
+
+    .task-item:last-child {
+      border-bottom: none;
+    }
+
+    .task-item .description-btn {
+      background-color: var(--blue);
+      color: white;
+      padding: 5px 10px;
+      margin: 5px 5px 0 0;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    body.dark .task-item .description-btn {
+      background-color: #1e2a78;
+      color: var(--dark-text);
+    }
+
+    .task-item .discuss-btn {
+      background-color: var(--blue);
+      color: white;
+      padding: 5px 10px;
+      margin: 5px 5px 0 0;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+    }
+
+    body.dark .task-item .discuss-btn {
+      background-color: #1e2a78;
+      color: var(--dark-text);
+    }
+
+    .task-item .description-content {
+      display: none;
+      margin-top: 5px;
+    }
+
+    .collaborators-photos {
+      display: flex;
+      align-items: center;
+      margin-top: 5px;
+    }
+
+    .collaborator-photo {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-left: -15px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .collaborator-photo:first-child {
+      margin-left: 0;
+    }
+
+    .collaborator-photo .remove-btn {
+      display: none;
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    body.dark .collaborator-photo .remove-btn {
+      background-color: darkred;
+      color: var(--dark-text);
+    }
+
+    .collaborator-photo:hover .remove-btn {
+      display: block;
+    }
+
+    .more-collaborators {
+      margin-left: 5px;
+      font-size: 14px;
+    }
+
+    .add-collaborator {
+      display: none;
+      margin-top: 10px;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .collaborator-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .collaborator-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px;
+      background: #f0f0f0;
+      border-radius: 5px;
+    }
+
+    body.dark .collaborator-list-item {
+      background: #444;
+      color: var(--dark-text);
+    }
+
+    .remove-collaborator-btn {
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    body.dark .remove-collaborator-btn {
+      background-color: darkred;
+    }
+
+    .calendar-popup {
+      display: none;
+      position: absolute;
+      background: var(--white);
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 10px;
+      z-index: 1000;
+      width: 200px;
+    }
+
+    body.dark .calendar-popup {
+      background: #333;
+      border-color: #777;
+      color: var(--dark-text);
+    }
+
+    .calendar-popup .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .time-picker {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .time-picker select {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: none;
+    }
+
+    body.dark .time-picker select {
+      background: #333;
+      color: var(--dark-text);
+      border: 1px solid #777;
+    }
+
+    input, textarea, select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+      background-size: 16px;
+    }
+
+    body.dark input, 
+    body.dark textarea,
+    body.dark select {
+      background-color: #333;
+      color: var(--dark-text);
+      border: 1px solid #777;
+      background: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+      background-size: 16px;
+    }
+
+    select {
+      padding-right: 30px;
+    }
+
+    #holidayName, #assignmentName, #assignmentDesc {
+      background: none;
+    }
+
+    body.dark #holidayName, 
+    body.dark #assignmentName, 
+    body.dark #assignmentDesc {
+      background: none;
+    }
+
+    .collaborators {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .collaborators label {
+      font-weight: bold;
+    }
+
+    .member-selection {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .member-selection select {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .selected-members {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+      flex-wrap: wrap;
+    }
+
+    .selected-member {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #f0f0f0;
+      padding: 5px 10px;
+      border-radius: 15px;
+    }
+
+    body.dark .selected-member {
+      background: #444;
+      color: var(--dark-text);
+    }
+
+    .selected-member img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .remove-member-btn {
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    body.dark .remove-member-btn {
+      background-color: darkred;
+    }
+
+    .task-stats {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      display: grid;
+      background: var(--blue);
+      color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      flex: 1;
+      min-width: 150px;
+      text-align: center;
+      font-size: 45px;
+    }
+
+    body.dark .stat-box {
+      background: #1e2a78;
+      color: #ffffff;
+    }
+
+    .stat-box span {
+      font-size: 20px;
+      display: block;
+      margin-top: 5px;
+      color: #ffffff;
+    }
+
+    body.dark .stat-box span {
+      color: #ffffff;
+    }
+
+    .calendar {
+      background: var(--white);
+      border: 2px solid var(--blue);
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    body.dark .calendar {
+      background: #2a2a2a;
+      border-color: #1e2a78;
+    }
+
+    .calendar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .calendar-top .date-display {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    body.dark .calendar-top .date-display {
+      color: var(--dark-text);
+    }
+
+    .calendar-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 10px 0;
+    }
+
+    .calendar-controls button {
+      background-color: #ccc;
+      color: #333;
+    }
+
+    body.dark .calendar-controls button {
+      background-color: #555;
+      color: var(--dark-text);
+    }
+
+    .calendar-controls .today-btn {
+      background-color: var(--blue);
+      color: white;
+    }
+
+    body.dark .calendar-controls .today-btn {
+      background-color: #1e2a78;
+      color: var(--dark-text);
+    }
+
+    #calendarYear {
+      width: 100px;
+    }
+
+    #viewSelect {
+      width: 100px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      /* border: 1px solid #ccc; */
+    }
+
+    .day-name, .day {
+      text-align: center;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    body.dark .day-name, 
+    body.dark .day {
+      border: 1px solid #666;
+      color: var(--dark-text);
+    }
+
+    .day-name {
+      font-weight: bold;
+      background: #f0f0f0;
+    }
+
+    body.dark .day-name {
+      background: #444;
+      color: var(--dark-text);
+    }
+
+    .day {
+      background: #fff;
+      text-align: left;
+    }
+
+    body.dark .day {
+      background: #444;
+      color: var(--dark-text);
+    }
+
+    .today {
+      background: var(--blue);
+      color: white !important;
+    }
+
+    body.dark .today {
+      background: #1e2a78;
+      color: var(--dark-text) !important;
+    }
+
+    .task-day {
+      background: #ffd699;
+      border-color: #ffa500;
+    }
+
+    body.dark .task-day {
+      background: #d4a355;
+      border-color: #d4a355;
+      color: var(--dark-text);
+    }
+
+    .task-day::after {
+      content: attr(data-task);
+      position: absolute;
+      bottom: 2px;
+      left: 2px;
+      font-size: 10px;
+      color: #333;
+    }
+
+    body.dark .task-day::after {
+      color: var(--dark-text);
+    }
+
+    .task-count {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      font-size: 10px;
+      color: #333;
+    }
+
+    body.dark .task-count {
+      color: var(--dark-text);
+    }
+
+    .holiday {
+      color: red !important;
+    }
+
+    .holiday::after {
+      content: attr(data-holiday);
+      position: absolute;
+      bottom: 2px;
+      left: 2px;
+      font-size: 10px;
+      color: red;
+    }
+
+    .sunday {
+      color: red !important;
+    }
+
+    .view-select {
+      padding: 8px;
+      border-radius: 5px;
+    }
+
+    .add-holiday-form {
+      display: none;
+      gap: 10px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+    }
+
+    .add-holiday-form input {
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    .day-view-grid {
+      display: block;
+    }
+
+    .day-view-grid .day {
+      display: block;
+      margin-bottom: 5px;
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    body.dark .day-view-grid .day {
+      border: 1px solid #666;
+    }
+
+    .modal, .confirm-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content, .confirm-modal-content {
+      background: var(--white);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    body.dark .modal-content, 
+    body.dark .confirm-modal-content {
+      background: #2a2a2a;
+      color: var(--dark-text);
+    }
+
+    .modal-content h3, .confirm-modal-content h3 {
+      margin-top: 0;
+      color: var(--blue);
+    }
+
+    body.dark .modal-content h3, 
+    body.dark .confirm-modal-content h3 {
+      color: var(--dark-text);
+    }
+
+    .close-btn {
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .task-modal-item {
+      padding: 10px 0;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    body.dark .task-modal-item {
+      border-bottom: 1px solid #666;
+    }
+
+    .task-modal-item:last-child {
+      border-bottom: none;
+    }
+
+    .task-details {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background: #f0f0f0;
+      border-radius: 5px;
+    }
+
+    body.dark .task-details {
+      background: #444;
+    }
+
+    .confirm-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .yes-btn {
+      background-color: var(--blue);
+      color: white;
+    }
+
+    body.dark .yes-btn {
+      background-color: #1e2a78;
+      color: var(--dark-text);
+    }
+
+    .no-btn {
+      background-color: red;
+      color: white;
+    }
+
+    body.dark .no-btn {
+      background-color: darkred;
+      color: var(--dark-text);
+    }
+
+    .chat-panel {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 25%;
+      height: 100%;
+      background: var(--white);
+      border-left: 1px solid #ccc;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    body.dark .chat-panel {
+      background: #2a2a2a;
+      border-left: 1px solid #777;
+      color: var(--dark-text);
+    }
+
+    .chat-panel h3 {
+      margin: 0 0 10px 0;
+      color: var(--blue);
+    }
+
+    body.dark .chat-panel h3 {
+      color: var(--dark-text);
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .chat-message {
+      margin: 5px 0;
+      padding: 8px;
+      background: #f0f0f0;
+      border-radius: 5px;
+    }
+
+    body.dark .chat-message {
+      background: #444;
+      color: var(--dark-text);
+    }
+
+    .chat-input-area {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    body.dark .chat-input {
+      background: #333;
+      color: var(--dark-text);
+      border: 1px solid #777;
+    }
+
+    .file-upload-btn {
+      background: var(--blue);
+      color: white;
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    body.dark .file-upload-btn {
+      background: #1e2a78;
+      color: var(--dark-text);
+    }
+
+    .send-btn {
+      background: var(--blue);
+      color: white;
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    body.dark .send-btn {
+      background: #1e2a78;
+      color: var(--dark-text);
+    }
+
+    .editable {
+      cursor: pointer;
+      padding: 2px;
+      border-radius: 4px;
+    }
+
+    .editable:hover {
+      background: #e0e0e0;
+    }
+
+    body.dark .editable:hover {
+      background: #555;
+    }
+
+    .editable[contenteditable="true"]:focus {
+      outline: 1px solid var(--blue);
+      background: #fff;
+    }
+
+    body.dark .editable[contenteditable="true"]:focus {
+      outline: 1px solid #1e2a78;
+      background: #444;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="profile">
+    <img src="https://www.acharya.ac.in/about/img/leadership/Marigowda.jpg" alt="Principal Photo">
+    <div class="info">
+      <h2>Dr C k Marigowda</h2>
+      <p>AUID: AI002221</p>
+      <p>Acharya Institute of Technology</p>
+      <button class="principal-btn">Principal</button>
+    </div>
+  </div>
+  <div class="right-header">
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    <button class="logout-btn">Logout</button>
+  </div>
+</header>
+
+<main>
+  <section class="task-area">
+    <div class="button-row">
+      <button class="assign-btn" id="showFormBtn">Create & Assign Task</button>
+      <button class="show-task-btn" id="showTasksBtn">Show Tasks</button>
+    </div>
+
+    <form id="taskForm" class="task-form">
+      <input type="text" id="assignmentName" placeholder="Assignment Name" required />
+      <textarea id="assignmentDesc" placeholder="Description of Assignment" required></textarea>
+      <input type="datetime-local" id="dueDate" required />
+      <div class="collaborators">
+        <label for="departmentSelect">Department</label>
+        <select id="departmentSelect" onchange="updateRoleOptions()">
+          <option value="">Select Department</option>
+          <option value="AI/ML">AI/ML</option>
+          <option value="CSE">CSE</option>
+          <option value="ECE">ECE</option>
+        </select>
+        <label for="roleSelect">Role of Staff</label>
+        <select id="roleSelect" onchange="updateMemberOptions()">
+          <option value="">Select Role</option>
+        </select>
+        <label for="memberSelect">Members</label>
+        <div class="member-selection">
+          <select id="memberSelect" onchange="addCollaborator()">
+            <option value="">Select Member</option>
+          </select>
+        </div>
+        <div id="selectedMembers" class="selected-members"></div>
+      </div>
+      <button type="submit" class="submit-btn">Submit Task</button>
+    </form>
+
+    <div id="taskList" class="task-list">
+      <h4>Assigned Tasks</h4>
+      <div id="taskItems"></div>
+    </div>
+  </section>
+
+  <section class="task-stats">
+    <div class="stat-box" id="assignedBox">42<span>Total Assigned</span></div>
+    <div class="stat-box" id="pendingBox">10<span>Pending</span></div>
+    <div class="stat-box" id="completedBox">30<span>Completed</span></div>
+    <div class="stat-box" id="overdueBox">2<span>Overdue</span></div>
+  </section>
+
+  <section class="calendar">
+    <div class="calendar-top">
+      <div class="date-display" id="todayDate"></div>
+      <div class="calendar-controls">
+        <button onclick="navigate(-1)">←</button>
+        <select id="calendarMonth"></select>
+        <select id="calendarYear"></select>
+        <button onclick="navigate(1)">→</button>
+        <button class="today-btn" onclick="goToToday()">Today</button>
+        <select class="view-select" id="viewSelect">
+          <option value="Month">Month</option>
+          <option value="Week">Week</option>
+          <option value="Day">Day</option>
+        </select>
+        <button onclick="toggleHolidayForm()">Add Holiday</button>
+      </div>
+    </div>
+    <form class="add-holiday-form" onsubmit="addHoliday(event)">
+      <input type="date" id="holidayDate" required />
+      <input type="text" id="holidayName" placeholder="Holiday Name" required />
+      <button type="submit">Add Holiday</button>
+    </form>
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </section>
+
+  <div id="taskModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">×</span>
+      <h3>Tasks for <span id="modalDate"></span></h3>
+      <div id="modalTaskList"></div>
+    </div>
+  </div>
+
+  <div id="confirmModal" class="confirm-modal">
+    <div class="confirm-modal-content">
+      <h3>Are you sure you want to cancel this task?</h3>
+      <div class="confirm-buttons">
+        <button class="yes-btn" id="confirmYes">Yes</button>
+        <button class="no-btn" id="confirmNo">No</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="chatPanel" class="chat-panel">
+    <h3>Task Discussion: <span id="chatTaskName"></span></h3>
+    <span class="close-btn" onclick="closeChatPanel()">×</span>
+    <div id="chatMessages" class="chat-messages"></div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" class="chat-input" placeholder="Type a message..." />
+      <label for="fileUpload" class="file-upload-btn">📎</label>
+      <input type="file" id="fileUpload" style="display: none;" />
+      <button class="send-btn" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+</main>
+
+<script>
+  const body = document.body;
+  const taskForm = document.getElementById("taskForm");
+  const showFormBtn = document.getElementById("showFormBtn");
+  const calendarGrid = document.getElementById("calendarGrid");
+  const calendarMonth = document.getElementById("calendarMonth");
+  const calendarYear = document.getElementById("calendarYear");
+  const todayDate = document.getElementById("todayDate");
+  const viewSelect = document.getElementById("viewSelect");
+  const showTasksBtn = document.getElementById("showTasksBtn");
+  const taskList = document.getElementById("taskList");
+  const taskItems = document.getElementById("taskItems");
+  const taskModal = document.getElementById("taskModal");
+  const modalDate = document.getElementById("modalDate");
+  const modalTaskList = document.getElementById("modalTaskList");
+  const memberSelect = document.getElementById("memberSelect");
+  const selectedMembersDiv = document.getElementById("selectedMembers");
+  const chatPanel = document.getElementById("chatPanel");
+  const chatMessages = document.getElementById("chatMessages");
+  const chatInput = document.getElementById("chatInput");
+  const fileUpload = document.getElementById("fileUpload");
+  const confirmModal = document.getElementById("confirmModal");
+  const confirmYes = document.getElementById("confirmYes");
+  const confirmNo = document.getElementById("confirmNo");
+
+  let taskDates = [];
+  let tasks = [];
+  let holidays = {};
+  let stats = { Assigned: 42, Pending: 10, Completed: 30, Overdue: 2 };
+  let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
+  let currentWeekStart = new Date().getDate() - new Date().getDay() + 1;
+  let currentDay = new Date().getDate();
+  let selectedCollaborators = [];
+  let currentChatTaskIndex = null;
+  let chatData = {};
+  let taskIndexToDelete = null;
+
+  const membersData = {
+    "AI/ML": {
+      "Faculty": [
+        { name: "Dr. John", photo: "https://via.placeholder.com/30" },
+        { name: "Prof. Alice", photo: "https://via.placeholder.com/30" },
+        { name: "Dr. Bob", photo: "https://via.placeholder.com/30" }
+      ],
+      "HOD": [
+        { name: "Dr. Smith", photo: "https://via.placeholder.com/30" }
+      ],
+      "Lab Instructor": [
+        { name: "Mr. Tom", photo: "https://via.placeholder.com/30" },
+        { name: "Ms. Jane", photo: "https://via.placeholder.com/30" }
+      ]
+    },
+    "CSE": {
+      "Faculty": [
+        { name: "Prof. Emma", photo: "https://via.placeholder.com/30" },
+        { name: "Dr. Mike", photo: "https://via.placeholder.com/30" },
+        { name: "Prof. Lisa", photo: "https://via.placeholder.com/30" },
+        { name: "Dr. James", photo: "https://via.placeholder.com/30" }
+      ],
+      "HOD": [
+        { name: "Dr. Brown", photo: "https://via.placeholder.com/30" }
+      ],
+      "Lab Instructor": [
+        { name: "Mr. Alex", photo: "https://via.placeholder.com/30" }
+      ]
+    },
+    "ECE": {
+      "Faculty": [
+        { name: "Prof. Sarah", photo: "https://via.placeholder.com/30" }
+      ],
+      "HOD": [
+        { name: "Dr. Wilson", photo: "https://via.placeholder.com/30" }
+      ],
+      "Lab Instructor": [
+        { name: "Ms. Emily", photo: "https://via.placeholder.com/30" },
+        { name: "Mr. David", photo: "https://via.placeholder.com/30" },
+        { name: "Ms. Anna", photo: "https://via.placeholder.com/30" },
+        { name: "Mr. Peter", photo: "https://via.placeholder.com/30" },
+        { name: "Ms. Linda", photo: "https://via.placeholder.com/30" }
+      ]
+    }
+  };
+
+  function updateRoleOptions(containerId = "") {
+    try {
+      const deptSelect = document.getElementById(`departmentSelect${containerId}`);
+      const roleSelect = document.getElementById(`roleSelect${containerId}`);
+      const memberSelect = document.getElementById(`memberSelect${containerId}`);
+      roleSelect.innerHTML = '<option value="">Select Role</option>';
+      memberSelect.innerHTML = '<option value="">Select Member</option>';
+
+      if (deptSelect.value && membersData[deptSelect.value]) {
+        const roles = Object.keys(membersData[deptSelect.value]);
+        roles.forEach(role => {
+          const option = document.createElement("option");
+          option.value = role;
+          option.text = role;
+          roleSelect.appendChild(option);
+        });
+      }
+    } catch (error) {
+      console.error("Error in updateRoleOptions:", error);
+    }
+  }
+
+  function updateMemberOptions(containerId = "") {
+    try {
+      const deptSelect = document.getElementById(`departmentSelect${containerId}`);
+      const roleSelect = document.getElementById(`roleSelect${containerId}`);
+      const memberSelect = document.getElementById(`memberSelect${containerId}`);
+      memberSelect.innerHTML = '<option value="">Select Member</option>';
+
+      if (deptSelect.value && roleSelect.value && membersData[deptSelect.value][roleSelect.value]) {
+        const members = membersData[deptSelect.value][roleSelect.value];
+        members.forEach(member => {
+          const option = document.createElement("option");
+          option.value = JSON.stringify(member);
+          option.text = member.name;
+          memberSelect.appendChild(option);
+        });
+      }
+    } catch (error) {
+      console.error("Error in updateMemberOptions:", error);
+    }
+  }
+
+  function addCollaborator(containerId = "") {
+    try {
+      const memberSelect = document.getElementById(`memberSelect${containerId}`);
+      const selectedMember = memberSelect.value;
+      if (selectedMember && selectedMember !== "") {
+        const member = JSON.parse(selectedMember);
+        if (!selectedCollaborators.some(collab => collab.name === member.name)) {
+          selectedCollaborators.push(member);
+          updateSelectedMembersDisplay();
+          if (containerId) {
+            const taskIndex = parseInt(containerId.replace("Edit", ""));
+            tasks[taskIndex].collaborators.push(member);
+            updateTaskList();
+            updateTaskDates();
+            populateCalendar(currentMonth, currentYear);
+          }
+        }
+        memberSelect.value = "";
+      }
+    } catch (error) {
+      console.error("Error in addCollaborator:", error);
+    }
+  }
+
+  function removeSelectedMember(name) {
+    try {
+      selectedCollaborators = selectedCollaborators.filter(collab => collab.name !== name);
+      updateSelectedMembersDisplay();
+    } catch (error) {
+      console.error("Error in removeSelectedMember:", error);
+    }
+  }
+
+  function updateSelectedMembersDisplay() {
+    try {
+      selectedMembersDiv.innerHTML = "";
+      selectedCollaborators.forEach(member => {
+        const memberDiv = document.createElement("div");
+        memberDiv.className = "selected-member";
+        memberDiv.innerHTML = `
+          <img src="${member.photo}" alt="${member.name}">
+          <span>${member.name}</span>
+          <span class="remove-member-btn" onclick="removeSelectedMember('${member.name}')">×</span>
+        `;
+        selectedMembersDiv.appendChild(memberDiv);
+      });
+    } catch (error) {
+      console.error("Error in updateSelectedMembersDisplay:", error);
+    }
+  }
+
+  function toggleTheme() {
+    try {
+      body.classList.toggle("dark");
+    } catch (error) {
+      console.error("Error in toggleTheme:", error);
+    }
+  }
+
+  function generateCalendarHTML(year, month, inputId, callback) {
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDay = new Date(year, month, 1).getDay();
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let html = '<span class="close-btn" onclick="closeCalendar(\'' + inputId + '\')">×</span><div class="calendar-grid">';
+    dayNames.forEach(day => {
+      html += `<div class="day-name">${day}</div>`;
+    });
+    for (let i = 0; i < firstDay; i++) {
+      html += '<div class="day"></div>';
+    }
+    for (let i = 1; i <= daysInMonth; i++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+      html += `<div class="day" onclick="${callback}('${dateStr}', '${inputId}')">${i}</div>`;
+    }
+    html += `
+      <div class="time-picker" style="grid-column: span 7;">
+        <select id="hourPicker${inputId}">
+          <option value="">Hour</option>
+          ${Array.from({length: 24}, (_, i) => `<option value="${i.toString().padStart(2, '0')}">${i.toString().padStart(2, '0')}</option>`).join('')}
+        </select>
+        <span>:</span>
+        <select id="minutePicker${inputId}">
+          <option value="">Minute</option>
+          ${Array.from({length: 60}, (_, i) => `<option value="${i.toString().padStart(2, '0')}">${i.toString().padStart(2, '0')}</option>`).join('')}
+        </select>
+      </div>
+    `;
+    html += '</div>';
+    return html;
+  }
+
+  function toggleCalendar(calendarId, taskIndex = null) {
+    try {
+      const calendarPopup = document.getElementById(calendarId);
+      if (calendarPopup.style.display === "block") {
+        calendarPopup.style.display = "none";
+      } else {
+        calendarPopup.style.display = "block";
+        const year = currentYear;
+        const month = currentMonth;
+        const callback = taskIndex !== null ? "selectTaskDueDate" : "selectFormDueDate";
+        calendarPopup.innerHTML = generateCalendarHTML(year, month, calendarId, callback);
+        if (taskIndex !== null) {
+          calendarPopup.dataset.taskIndex = taskIndex;
+        }
+        const button = document.getElementById(calendarId.replace("Calendar", ""));
+        const rect = button.getBoundingClientRect();
+        const calendarWidth = 200;
+        const rightEdge = rect.right + calendarWidth + 5;
+        const windowWidth = window.innerWidth;
+
+        let leftPosition = rect.right + window.scrollX + 5;
+        if (rightEdge > windowWidth) {
+          leftPosition = rect.left + window.scrollX - calendarWidth - 5;
+        }
+
+        calendarPopup.style.top = `${rect.top + window.scrollY}px`;
+        calendarPopup.style.left = `${leftPosition}px`;
+      }
+    } catch (error) {
+      console.error("Error in toggleCalendar:", error);
+    }
+  }
+
+  window.closeCalendar = function(calendarId) {
+    try {
+      document.getElementById(calendarId).style.display = "none";
+    } catch (error) {
+      console.error("Error in closeCalendar:", error);
+    }
+  };
+
+  window.selectFormDueDate = function(date, calendarId) {
+    try {
+      const hour = document.getElementById(`hourPicker${calendarId}`).value || '00';
+      const minute = document.getElementById(`minutePicker${calendarId}`).value || '00';
+      const fullDateTime = `${date}T${hour}:${minute}`;
+      document.getElementById("dueDate").value = fullDateTime;
+      document.getElementById(calendarId).style.display = "none";
+    } catch (error) {
+      console.error("Error in selectFormDueDate:", error);
+    }
+  };
+
+  window.selectTaskDueDate = function(date, calendarId) {
+    try {
+      const taskIndex = document.getElementById(calendarId).dataset.taskIndex;
+      const hour = document.getElementById(`hourPicker${calendarId}`).value || '00';
+      const minute = document.getElementById(`minutePicker${calendarId}`).value || '00';
+      const fullDateTime = `${date}T${hour}:${minute}`;
+      const [newDate, newTime] = fullDateTime.split('T');
+      tasks[taskIndex].date = newDate;
+      tasks[taskIndex].time = newTime;
+      updateTaskDates();
+      updateTaskList();
+      populateCalendar(currentMonth, currentYear);
+      document.getElementById(calendarId).style.display = "none";
+    } catch (error) {
+      console.error("Error in selectTaskDueDate:", error);
+    }
+  };
+
+  showFormBtn.addEventListener("click", () => {
+    try {
+      taskForm.style.display = taskForm.style.display === "flex" ? "none" : "flex";
+    } catch (error) {
+      console.error("Error in showFormBtn:", error);
+    }
+  });
+
+  taskForm.addEventListener("submit", function (e) {
+    try {
+      e.preventDefault();
+      const name = document.getElementById("assignmentName").value;
+      const desc = document.getElementById("assignmentDesc").value;
+      const dateTime = document.getElementById("dueDate").value;
+      const [date, time] = dateTime.split('T');
+
+      const task = { name, desc, date, time: time || '00:00', collaborators: [...selectedCollaborators], messages: [] };
+      tasks.push(task);
+
+      const existingTaskIndex = taskDates.findIndex(t => t.date === date);
+      if (existingTaskIndex !== -1) {
+        taskDates[existingTaskIndex].tasks.push({ name });
+      } else {
+        taskDates.push({ date, tasks: [{ name }] });
+      }
+
+      stats.Assigned++;
+      stats.Pending++;
+      updateStats();
+      populateCalendar(currentMonth, currentYear);
+      taskForm.reset();
+      taskForm.style.display = "none";
+      selectedCollaborators = [];
+      selectedMembersDiv.innerHTML = "";
+    } catch (error) {
+      console.error("Error in taskForm submit:", error);
+    }
+  });
+
+  function updateTaskList() {
+    try {
+      taskItems.innerHTML = "";
+      tasks.forEach((task, index) => {
+        const taskDiv = document.createElement("div");
+        taskDiv.className = "task-item";
+        const photosHtml = task.collaborators.slice(0, 4).map((collab, i) => `
+          <img src="${collab.photo}" class="collaborator-photo" style="z-index: ${4 - i};" onclick="toggleCollaboratorList(${index})">
+        `).join("");
+        const moreCollaborators = task.collaborators.length > 4 ? `<span class="more-collaborators">+${task.collaborators.length - 4}</span>` : "";
+        taskDiv.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 5px;">
+            <strong class="editable" contenteditable="false" onfocus="makeEditable(this, ${index}, 'name')">${task.name}</strong>
+            <button class="small-circle-btn" onclick="makeEditable(document.querySelector('#taskItems .task-item:nth-child(${index + 1}) strong'), ${index}, 'name')">✏️</button>
+          </div>
+          <div style="display: flex; align-items: center; gap: 5px;">
+            Due: ${task.date} ${task.time}
+            <button class="small-circle-btn" id="dueDateTask${index}" onclick="toggleCalendar('calendar${index}', ${index})">🗓️</button>
+            <div id="calendar${index}" class="calendar-popup"></div>
+          </div>
+          <div class="collaborators-photos">
+            ${photosHtml}${moreCollaborators}
+          </div>
+          <div id="addCollaborator${index}" class="add-collaborator">
+            <div class="collaborator-list" id="collaboratorList${index}">
+              ${task.collaborators.map(collab => `
+                <div class="collaborator-list-item">
+                  <span>${collab.name}</span>
+                  <span class="remove-collaborator-btn" onclick="removeCollaborator(${index}, '${collab.name}')">–</span>
+                </div>
+              `).join("")}
+            </div>
+            <select id="departmentSelectEdit${index}" onchange="updateRoleOptions('Edit${index}')">
+              <option value="">Select Department</option>
+              <option value="AI/ML">AI/ML</option>
+              <option value="CSE">CSE</option>
+              <option value="ECE">ECE</option>
+            </select>
+            <select id="roleSelectEdit${index}" onchange="updateMemberOptions('Edit${index}')">
+              <option value="">Select Role</option>
+            </select>
+            <select id="memberSelectEdit${index}" onchange="addCollaborator('Edit${index}')">
+              <option value="">Select Member</option>
+            </select>
+          </div>
+          <button class="description-btn" onclick="toggleDescription(${index})">Description</button>
+          <button class="discuss-btn" onclick="openChatPanel(${index})">💬 Discuss</button>
+          <button class="cancel-task-btn" onclick="showConfirmModal(${index})">Cancel Task</button>
+          <div id="desc-${index}" class="description-content">
+            <div style="display: flex; align-items: center; gap: 5px;">
+              <div class="editable" contenteditable="false" onfocus="makeEditable(this, ${index}, 'desc')">${task.desc}</div>
+              <button class="small-circle-btn" onclick="makeEditable(document.querySelector('#desc-${index} .editable'), ${index}, 'desc')">✏️</button>
+            </div>
+          </div>
+        `;
+        taskItems.appendChild(taskDiv);
+      });
+    } catch (error) {
+      console.error("Error in updateTaskList:", error);
+    }
+  }
+
+  showTasksBtn.addEventListener("click", () => {
+    try {
+      taskList.style.display = taskList.style.display === "block" ? "none" : "block";
+      if (taskList.style.display === "block") {
+        updateTaskList();
+      }
+    } catch (error) {
+      console.error("Error in showTasksBtn:", error);
+    }
+  });
+
+  window.showConfirmModal = function(index) {
+    taskIndexToDelete = index;
+    confirmModal.style.display = "flex";
+  };
+
+  confirmYes.addEventListener("click", () => {
+    try {
+      if (taskIndexToDelete !== null) {
+        const task = tasks[taskIndexToDelete];
+        tasks.splice(taskIndexToDelete, 1);
+        stats.Assigned--;
+        stats.Pending--;
+        updateStats();
+        updateTaskDates();
+        updateTaskList();
+        populateCalendar(currentMonth, currentYear);
+        confirmModal.style.display = "none";
+        taskIndexToDelete = null;
+      }
+    } catch (error) {
+      console.error("Error in confirmYes:", error);
+    }
+  });
+
+  confirmNo.addEventListener("click", () => {
+    try {
+      confirmModal.style.display = "none";
+      taskIndexToDelete = null;
+    } catch (error) {
+      console.error("Error in confirmNo:", error);
+    }
+  });
+
+  window.makeEditable = function(element, index, field) {
+    try {
+      element.contentEditable = true;
+      element.focus();
+      element.onblur = () => {
+        element.contentEditable = false;
+        tasks[index][field] = element.innerText;
+        updateTaskDates();
+        populateCalendar(currentMonth, currentYear);
+      };
+      element.onkeypress = (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          element.blur();
+        }
+      };
+    } catch (error) {
+      console.error("Error in makeEditable:", error);
+    }
+  };
+
+  window.toggleCollaboratorList = function(index) {
+    try {
+      const addForm = document.getElementById(`addCollaborator${index}`);
+      addForm.style.display = addForm.style.display === "block" ? "none" : "block";
+    } catch (error) {
+      console.error("Error in toggleCollaboratorList:", error);
+    }
+  };
+
+  window.removeCollaborator = function(index, name) {
+    try {
+      tasks[index].collaborators = tasks[index].collaborators.filter(collab => collab.name !== name);
+      updateTaskList();
+      updateTaskDates();
+      populateCalendar(currentMonth, currentYear);
+    } catch (error) {
+      console.error("Error in removeCollaborator:", error);
+    }
+  };
+
+  window.toggleDescription = function(index) {
+    try {
+      const descDiv = document.getElementById(`desc-${index}`);
+      descDiv.style.display = descDiv.style.display === "block" ? "none" : "block";
+    } catch (error) {
+      console.error("Error in toggleDescription:", error);
+    }
+  };
+
+  window.openChatPanel = function(index) {
+    try {
+      currentChatTaskIndex = index;
+      document.getElementById("chatTaskName").innerText = tasks[index].name;
+      chatMessages.innerHTML = "";
+      (chatData[index] || []).forEach(msg => {
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "chat-message";
+        msgDiv.innerHTML = `
+          <strong>${msg.sender}</strong> (${msg.timestamp}): ${msg.text}
+          ${msg.file ? `<br><a href="${msg.file.url}" download="${msg.file.name}">${msg.file.name}</a>` : ""}
+        `;
+        chatMessages.appendChild(msgDiv);
+      });
+      chatPanel.style.display = "block";
+      chatInput.focus();
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    } catch (error) {
+      console.error("Error in openChatPanel:", error);
+    }
+  };
+
+  window.closeChatPanel = function() {
+    try {
+      chatPanel.style.display = "none";
+      currentChatTaskIndex = null;
+      chatInput.value = "";
+    } catch (error) {
+      console.error("Error in closeChatPanel:", error);
+    }
+  };
+
+  window.sendMessage = function() {
+    try {
+      if (!currentChatTaskIndex && currentChatTaskIndex !== 0) return;
+      const message = chatInput.value.trim();
+      if (message) {
+        const timestamp = new Date().toLocaleString();
+        if (!chatData[currentChatTaskIndex]) chatData[currentChatTaskIndex] = [];
+        chatData[currentChatTaskIndex].push({
+          sender: "Principal",
+          text: message,
+          timestamp
+        });
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "chat-message";
+        msgDiv.innerHTML = `<strong>Principal</strong> (${timestamp}): ${message}`;
+        chatMessages.appendChild(msgDiv);
+        chatInput.value = "";
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+    } catch (error) {
+      console.error("Error in sendMessage:", error);
+    }
+  };
+
+  chatInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  fileUpload.addEventListener("change", () => {
+    try {
+      if (!currentChatTaskIndex && currentChatTaskIndex !== 0) return;
+      const file = fileUpload.files[0];
+      if (file) {
+        const timestamp = new Date().toLocaleString();
+        const fileUrl = URL.createObjectURL(file);
+        if (!chatData[currentChatTaskIndex]) chatData[currentChatTaskIndex] = [];
+        chatData[currentChatTaskIndex].push({
+          sender: "Principal",
+          text: "",
+          file: { name: file.name, url: fileUrl },
+          timestamp
+        });
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "chat-message";
+        msgDiv.innerHTML = `<strong>Principal</strong> (${timestamp}): <br><a href="${fileUrl}" download="${file.name}">${file.name}</a>`;
+        chatMessages.appendChild(msgDiv);
+        fileUpload.value = "";
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+    } catch (error) {
+      console.error("Error in fileUpload:", error);
+    }
+  });
+
+  function updateStats() {
+    try {
+      const assignedBox = document.getElementById("assignedBox");
+      const pendingBox = document.getElementById("pendingBox");
+      const completedBox = document.getElementById("completedBox");
+      const overdueBox = document.getElementById("overdueBox");
+
+      if (assignedBox) assignedBox.innerHTML = `${stats.Assigned || 0}<span>Total Assigned</span>`;
+      if (pendingBox) pendingBox.innerHTML = `${stats.Pending || 0}<span>Pending</span>`;
+      if (completedBox) completedBox.innerHTML = `${stats.Completed || 0}<span>Completed</span>`;
+      if (overdueBox) overdueBox.innerHTML = `${stats.Overdue || 0}<span>Overdue</span>`;
+    } catch (error) {
+      console.error("Error in updateStats:", error);
+    }
+  }
+
+  function updateTaskDates() {
+    try {
+      taskDates = [];
+      tasks.forEach(task => {
+        const [date] = task.date.split('T');
+        const existingTaskIndex = taskDates.findIndex(t => t.date === date);
+        if (existingTaskIndex !== -1) {
+          taskDates[existingTaskIndex].tasks.push({ name: task.name });
+        } else {
+          taskDates.push({ date, tasks: [{ name: task.name }] });
+        }
+      });
+    } catch (error) {
+      console.error("Error in updateTaskDates:", error);
+    }
+  }
+
+  function populateMonthView(month, year) {
+    try {
+      calendarGrid.className = "calendar-grid";
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const firstDay = new Date(year, month, 1).getDay();
+      const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      calendarGrid.innerHTML = "";
+      dayNames.forEach(day => {
+        const d = document.createElement("div");
+        d.className = "day-name";
+        d.innerText = day;
+        calendarGrid.appendChild(d);
+      });
+      for (let i = 0; i < firstDay; i++) {
+        const emptyDay = document.createElement("div");
+        emptyDay.className = "day";
+        calendarGrid.appendChild(emptyDay);
+      }
+      for (let i = 1; i <= daysInMonth; i++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+        const dayBox = document.createElement("div");
+        dayBox.className = "day";
+        if (dateStr === new Date().toISOString().split("T")[0]) {
+          dayBox.classList.add("today");
+        }
+        const taskOnDay = taskDates.find(task => task.date === dateStr);
+        if (taskOnDay) {
+          dayBox.classList.add("task-day");
+          const taskCount = taskOnDay.tasks.length;
+          dayBox.setAttribute("data-task", taskCount > 1 ? taskOnDay.tasks[0].name : taskOnDay.tasks[0].name);
+          dayBox.innerHTML = `${i}<span class="task-count">+${taskCount}</span>`;
+          dayBox.onclick = () => showTasksForDay(dateStr);
+        } else {
+          dayBox.innerText = i;
+        }
+        if (holidays[dateStr]) {
+          dayBox.classList.add("holiday");
+          dayBox.setAttribute("data-holiday", holidays[dateStr]);
+        }
+        if (new Date(year, month, i).getDay() === 0) {
+          dayBox.classList.add("sunday");
+        }
+        calendarGrid.appendChild(dayBox);
+      }
+      todayDate.innerText = new Date(year, month, 1).toLocaleDateString('en-GB', {
+        month: 'long', year: 'numeric'
+      });
+    } catch (error) {
+      console.error("Error in populateMonthView:", error);
+    }
+  }
+
+  function populateWeekView(month, year, weekStart) {
+    try {
+      calendarGrid.className = "calendar-grid";
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      calendarGrid.innerHTML = "";
+      const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      dayNames.forEach(day => {
+        const d = document.createElement("div");
+        d.className = "day-name";
+        d.innerText = day;
+        calendarGrid.appendChild(d);
+      });
+      for (let i = 0; i < 7; i++) {
+        const dayBox = document.createElement("div");
+        dayBox.className = "day";
+        const dayNum = weekStart + i;
+        if (dayNum > 0 && dayNum <= daysInMonth) {
+          const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayNum).padStart(2, '0')}`;
+          const taskOnDay = taskDates.find(task => task.date === dateStr);
+          if (taskOnDay) {
+            dayBox.classList.add("task-day");
+            const taskCount = taskOnDay.tasks.length;
+            dayBox.innerHTML = `${dayNum}<span class="task-count">+${taskCount}</span>`;
+            dayBox.onclick = () => showTasksForDay(dateStr);
+          } else {
+            dayBox.innerText = dayNum;
+          }
+          if (dateStr === new Date().toISOString().split("T")[0]) {
+            dayBox.classList.add("today");
+          }
+          if (holidays[dateStr]) {
+            dayBox.classList.add("holiday");
+            dayBox.setAttribute("data-holiday", holidays[dateStr]);
+          }
+          if (new Date(year, month, dayNum).getDay() === 0) {
+            dayBox.classList.add("sunday");
+          }
+        }
+        calendarGrid.appendChild(dayBox);
+      }
+      todayDate.innerText = new Date(year, month, weekStart).toLocaleDateString('en-GB', {
+        month: 'long', year: 'numeric'
+      });
+    } catch (error) {
+      console.error("Error in populateWeekView:", error);
+    }
+  }
+
+  function populateDayView(month, year) {
+    try {
+      calendarGrid.className = "calendar-grid day-view-grid";
+      calendarGrid.innerHTML = "";
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      for (let i = 1; i <= daysInMonth; i++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+        const dayBox = document.createElement("div");
+        dayBox.className = "day";
+        let content = `${i} - `;
+        const holiday = holidays[dateStr];
+        const taskOnDay = taskDates.find(task => task.date === dateStr);
+        content += `Event: ${holiday || 'None'}`;
+        if (taskOnDay) {
+          content += `, Tasks: ${taskOnDay.tasks.length > 1 ? `+${taskOnDay.tasks.length}` : taskOnDay.tasks[0].name}`;
+          dayBox.classList.add("task-day");
+          dayBox.onclick = () => showTasksForDay(dateStr);
+        }
+        if (dateStr === new Date().toISOString().split("T")[0]) {
+          dayBox.classList.add("today");
+        }
+        if (holiday) {
+          dayBox.classList.add("holiday");
+        }
+        if (new Date(year, month, i).getDay() === 0) {
+          dayBox.classList.add("sunday");
+        }
+        dayBox.innerText = content;
+        calendarGrid.appendChild(dayBox);
+      }
+      todayDate.innerText = new Date(year, month, 1).toLocaleDateString('en-GB', {
+        month: 'long', year: 'numeric'
+      });
+    } catch (error) {
+      console.error("Error in populateDayView:", error);
+    }
+  }
+
+  function populateCalendar(month, year) {
+    try {
+      const view = viewSelect.value;
+      if (view === "Week") {
+        populateWeekView(month, year, currentWeekStart);
+      } else if (view === "Day") {
+        populateDayView(month, year);
+      } else {
+        populateMonthView(month, year);
+      }
+    } catch (error) {
+      console.error("Error in populateCalendar:", error);
+    }
+  }
+
+  function navigate(delta) {
+    try {
+      const view = viewSelect.value;
+      if (view === "Week") {
+        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+        currentWeekStart += delta * 7;
+        if (currentWeekStart > daysInMonth) {
+          currentWeekStart = 1;
+          currentMonth++;
+          if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+          }
+        } else if (currentWeekStart < 1) {
+          currentMonth--;
+          if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+          }
+          const prevMonthDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+          currentWeekStart = prevMonthDays - (prevMonthDays % 7) + 1;
+          if (currentWeekStart > prevMonthDays) {
+            currentWeekStart = prevMonthDays - 6;
+          }
+        }
+        calendarMonth.value = currentMonth;
+        calendarYear.value = currentYear;
+        populateWeekView(currentMonth, currentYear, currentWeekStart);
+      } else if (view === "Day") {
+        currentMonth += delta;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        } else if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        currentDay = 1;
+        calendarMonth.value = currentMonth;
+        calendarYear.value = currentYear;
+        populateDayView(currentMonth, currentYear);
+      } else {
+        currentMonth += delta;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        } else if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        calendarMonth.value = currentMonth;
+        calendarYear.value = currentYear;
+        populateMonthView(currentMonth, currentYear);
+      }
+    } catch (error) {
+      console.error("Error in navigate:", error);
+    }
+  }
+
+  function showTasksForDay(date) {
+    try {
+      const taskOnDay = taskDates.find(task => task.date === date);
+      if (taskOnDay) {
+        modalDate.innerText = date;
+        modalTaskList.innerHTML = "";
+        const fullTasks = tasks.filter(task => task.date === date);
+        fullTasks.forEach((task, index) => {
+          const taskDiv = document.createElement("div");
+          taskDiv.className = "task-modal-item";
+          const collaboratorsList = task.collaborators.length > 0 ? task.collaborators.map(c => c.name).join(", ") : "None";
+          taskDiv.innerHTML = `
+            <strong>${task.name}</strong>
+            <div id="task-details-${index}" class="task-details">
+              <p><strong>Description:</strong> ${task.desc}</p>
+              <p><strong>Due Date:</strong> ${task.date} ${task.time}</p>
+              <p><strong>Collaborators:</strong> ${collaboratorsList}</p>
+            </div>
+          `;
+          taskDiv.onclick = () => toggleTaskDetails(index);
+          modalTaskList.appendChild(taskDiv);
+        });
+        taskModal.style.display = "flex";
+      }
+    } catch (error) {
+      console.error("Error in showTasksForDay:", error);
+    }
+  }
+
+  function toggleTaskDetails(index) {
+    try {
+      const detailsDiv = document.getElementById(`task-details-${index}`);
+      if (detailsDiv) {
+        detailsDiv.style.display = detailsDiv.style.display === "block" ? "none" : "block";
+      }
+    } catch (error) {
+      console.error("Error in toggleTaskDetails:", error);
+    }
+  }
+
+  function closeModal() {
+    try {
+      taskModal.style.display = "none";
+    } catch (error) {
+      console.error("Error in closeModal:", error);
+    }
+  }
+
+  function setupCalendarSelectors() {
+    try {
+      for (let i = 0; i < 12; i++) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.text = new Date(2000, i).toLocaleString('default', { month: 'long' });
+        calendarMonth.appendChild(opt);
+      }
+      for (let y = 2020; y <= 2035; y++) {
+        const opt = document.createElement("option");
+        opt.value = y;
+        opt.text = y;
+        calendarYear.appendChild(opt);
+      }
+      calendarMonth.value = currentMonth;
+      calendarYear.value = currentYear;
+      calendarMonth.onchange = calendarYear.onchange = () => {
+        currentMonth = parseInt(calendarMonth.value);
+        currentYear = parseInt(calendarYear.value);
+        currentWeekStart = 1;
+        currentDay = 1;
+        populateCalendar(currentMonth, currentYear);
+      };
+    } catch (error) {
+      console.error("Error in setupCalendarSelectors:", error);
+    }
+  }
+
+  function goToToday() {
+    try {
+      const today = new Date();
+      currentMonth = today.getMonth();
+      currentYear = today.getFullYear();
+      currentWeekStart = today.getDate() - today.getDay() + 1;
+      currentDay = today.getDate();
+      calendarMonth.value = currentMonth;
+      calendarYear.value = currentYear;
+      populateCalendar(currentMonth, currentYear);
+    } catch (error) {
+      console.error("Error in goToToday:", error);
+    }
+  }
+
+  function toggleHolidayForm() {
+    try {
+      const form = document.querySelector(".add-holiday-form");
+      form.style.display = form.style.display === "flex" ? "none" : "flex";
+    } catch (error) {
+      console.error("Error in toggleHolidayForm:", error);
+    }
+  }
+
+  function addHoliday(e) {
+    try {
+      e.preventDefault();
+      const date = document.getElementById("holidayDate").value;
+      const name = document.getElementById("holidayName").value;
+      holidays[date] = name;
+      populateCalendar(currentMonth, currentYear);
+      e.target.reset();
+      document.querySelector(".add-holiday-form").style.display = "none";
+    } catch (error) {
+      console.error("Error in addHoliday:", error);
+    }
+  }
+
+  viewSelect.addEventListener("change", function() {
+    try {
+      currentWeekStart = 1;
+      currentDay = 1;
+      populateCalendar(currentMonth, currentYear);
+    } catch (error) {
+      console.error("Error in viewSelect change:", error);
+    }
+  });
+
+  try {
+    setupCalendarSelectors();
+    populateCalendar(currentMonth, currentYear);
+    updateStats();
+  } catch (error) {
+    console.error("Error in initialization:", error);
+    alert("An error occurred during initialization. Please check the console for details.");
+  }
+</script>
+
+</body>
+</html>
